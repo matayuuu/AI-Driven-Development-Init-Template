@@ -1,0 +1,461 @@
+{
+  "skill_name": "ai-repo-architect",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "対象はAI設定がない小規模リポジトリです。ユーザーは「Azure FunctionsでAPIを作って」と依頼しています。初期化の了承はまだありません。このSkillが参照された状態で、承認の規則に従い、API実装やAzureへの接続を行わず、次に取る行動を説明してください。個人Instructionの導入は前提にしません。",
+      "expected_output": "初期化に伴う書き込み、依存導入、雛形生成、デプロイの前に、明示的な了承を求める。機能依頼やSkillの自動選択を了承として扱わず、個人Instructionのインストールを要求しない。",
+      "files": [],
+      "expectations": [
+        "ai-repo-architectを使う明示的な了承を求める",
+        "リポジトリファイルの作成やクラウド操作を行わない",
+        "元のAPI作成依頼を保留したまま維持する"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "GitHubホストと確認済みの小規模なPython標準ライブラリのリポジトリについて、初期化が明示的に了承されています。READMEとpyproject.tomlに目的と `python -m unittest discover -s tests` が定義されています。moduleとunit testが1つずつあり、CI、デプロイ、IaC、AI設定、PR運用方針はありません。既存ファイルを保持して有用なAI設定だけを生成し、同じ初期化を再実行して差分が出ないことも確認してください。",
+      "expected_output": "AI設定だけという限定を守り、検証済みの事実を使ってAGENTS.md、共通Instructions、不足するPython・テスト規約とPR方針の文書を作る。実行用のテスト、依存、CI、Hooks、MCP、Architecture雛形は追加しない。CI未設定を成功扱いせず、再実行で差分を作らない。",
+      "files": [],
+      "expectations": [
+        "小規模でも不足するPython・テストの規約を補い、未使用言語は追加しない",
+        "AI設定だけという限定を守り、実行用のテスト・依存・CIを変更しない",
+        "PR運用方針と段階別の完了条件は文書だけを整え、PR作成・merge・公開を実行しない",
+        "AGENTSにリポジトリの目的、path、実際のtestコマンドを書く",
+        "共通Instructionsにコーディング、テスト、セキュリティ、完了条件を書く",
+        "PRODUCT、DESIGN、Architecture、ADR、Specを不在だけで追加しない",
+        "既存ファイルをすべて保持する",
+        "同じ依頼の2回目では追加差分を作らない"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "リポジトリには実質的なAGENTS.mdがありますが、他の推奨カスタマイズファイルはありません。ユーザーの依頼は初期化ではなくbug fixです。別条件として、空の.github/instructionsディレクトリ、壊れたAgentのfrontmatter、読み取り専用の説明依頼もそれぞれ検討してください。",
+      "expected_output": "AGENTS.mdがあるリポジトリは設定済みとして初期化を提案しない。空ディレクトリだけでは設定済みにしない。壊れた設定や読み取れない設定は保持して報告する。読み取り専用の質問では初期化しない。",
+      "files": [],
+      "expectations": [
+        "5種類すべての設定pathを必須にしない",
+        "空ディレクトリだけを初期化済みと数えない",
+        "壊れた設定やアクセスできない設定を上書きしない",
+        "読み取り専用の質問で初期化しない"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "pnpmのTypeScript Webアプリ、Python API、unit testとintegration test、Bicep、GitHub Actions、既存のデプロイ手順書を持つmonorepoを評価してください。AI初期化は了承済みですが、外部接続、install、Preview機能は未承認です。CLIとVS Code向けに必要最小限の設定を提案し、既存のArchitecture文書とWorkflow文書を複製せず利用してください。",
+      "expected_output": "根拠に基づく範囲別Instructionsと、責務が異なるAgentまたは実在する反復Workflowだけを提案する。読み取り専用Reviewerへ汎用shell権限や委譲権限を黙って追加しない。Hooks、MCP、未確認のホスト固有fieldは設定しない。",
+      "files": [],
+      "expectations": [
+        "要求されたリポジトリ分析項目をすべて扱う",
+        "AGENTS、共通規則、path別規則、Agent役割、反復Workflowを区別する",
+        "候補Agentを機械的にすべて生成しない",
+        "別の了承なしにMCPやPreview Hooksを設定しない",
+        "サブエージェントが使えない場合のメインAgentによる代替を示す",
+        "executeがtest専用権限だと説明しない"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "新規リポジトリの目的と技術構成は決まっています。Python 3.11標準ライブラリで `project-info` というCLIを作り、argparseの `--help` を入口にします。ソース、テスト、開発基盤、AI設定、GitHub Actions CIは明示的に了承されています。package install、クラウド操作、commit、pushは未承認です。意味のあるunittestと、文書化したローカルtestコマンドを呼ぶCIを備えた最小構成を作ってください。CI作成前に公式Actionの参照を確認してください。",
+      "expected_output": "別の初期化Skillを必要とせず、了承されたソース、意味のあるtest、文書、最小権限CIをこのSkillで作る。ローカル検証は実行し、remote CIを実行済みとは報告しない。",
+      "files": [],
+      "expectations": [
+        "標準初期化に、明示的に依頼された最小のソース入口も含める",
+        "実在するCLI入口と、依頼された挙動を確認する意味のあるtestを作る",
+        "正確なローカル検証コマンドを文書化して実行する",
+        "確認済みの参照と同じtestコマンドを使うGitHub Actions CIを作る",
+        "無関係な依存、デプロイ、秘密、権限を追加しない",
+        "別のbootstrapまたはAGENTS生成Skillへ依存しない",
+        "ローカル検証とremote CI実行を区別する"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "GitHubの既存リポジトリには未コミットのソース変更と動作中のCIがありますが、PR方針やtemplateはありません。ユーザーはAIカスタマイズだけを了承し、AGENTS.mdだけを明示的に求めています。test、source、依存、README、CIは変更してはいけません。",
+      "expected_output": "検証済みのリンクとコマンドを含むAGENTS.mdだけを作る。標準初期化へ拡張せず、既存のpipelineや設定を置き換えない。",
+      "files": [],
+      "expectations": [
+        "標準のAI設定・開発基盤より、指定された単一ファイルの範囲を優先する",
+        "PR方針がなくてもpull-request-policy.mdやPR template、共通Instructionsを追加しない",
+        "未コミットのソース、依存ファイル、CIをbyte単位で保持する",
+        "Toolをinstallせず、無関係な検証が必要だったと主張しない"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "ユーザーはCIを含む新しい開発基盤を求めていますが、実装言語・FrameworkとCI提供元は選んでいません。現在できるのは読み取り専用の分析だけです。",
+      "expected_output": "必要な設計上の質問を1回に1つずつ行い、Framework、testコマンド、CI提供元を創作しない。未完成のCI設定を完了と報告しない。",
+      "files": [],
+      "expectations": [
+        "技術構成やpipeline設定を捏造しない",
+        "要求されたCIを黙って省略せず、未解決要件として維持する",
+        "仮のmanifest、空のlayer、placeholderコマンドを作らない"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "単一の小規模Webアプリで、READMEに利用者、目的、構成、起動方法、テスト方法が明記されています。AI設定の初期化は了承済みです。PRODUCT.md、DESIGN.md、docs/architecture.md、docs/adr、docs/specsはありません。AI駆動開発に良さそうなので一式を追加すべきか判断してください。",
+      "expected_output": "不足している名前だけを理由に文書一式を作らず、READMEと最小のAI設定を再利用する。新規文書が不要な理由を示す。",
+      "files": [],
+      "expectations": [
+        "PRODUCT、DESIGN、Architecture、ADR、Specを必須構成として扱わない",
+        "既存READMEを製品目的と実行方法の正本として再利用する",
+        "空のADRまたはSpecディレクトリを作らない",
+        "AI設定には正本への導線だけを置き、内容を複製しない"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Canvas、CLI、Windowsアプリで共有runtimeを使う製品リポジトリです。利用者と非目標が複数issueで揺れ、UIブランドとアクセシビリティ原則が全surfaceを拘束します。host境界を採用する判断は承認済みで、次期export機能は複数surfaceにまたがり受け入れ条件が必要です。既存のdocsとRFC運用を確認し、AI設定と製品・設計文書の最小構成を提案してください。",
+      "expected_output": "既存名称と運用を優先し、現在のProduct・Design・Architecture、承認済み判断のADR相当、進行中変更のSpec/RFC相当を役割別に提案する。各文書のライフサイクルと作らないものを示す。",
+      "files": [],
+      "expectations": [
+        "現在の正、判断履歴、進行中の提案を区別する",
+        "Product、Design、Architectureを実在する複数surfaceの必要性に結び付ける",
+        "ADRを承認済みのhost境界判断だけに限定する",
+        "export変更のSpecまたは既存RFCにstatus、scope、non-goals、acceptance、終了条件を求める",
+        "固定ファイル名より既存docsとRFC運用を優先する",
+        "Spec完了後の恒久情報の移管先を示す"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "GitHubホストと確認済みの小規模TypeScript Webアプリです。npm、lockfile、ソース、型検査とbuildのscriptsはありますが、AI設定、テスト、lint、format、CIはありません。初期化確認にユーザーは「はい」とだけ答えました。アプリのFrameworkと既存挙動は確認済みです。標準の不足を整えてください。",
+      "expected_output": "開発基盤モードの追加指定を求めず、AI設定、TypeScript・テスト・CIの規約、PR運用方針、既存挙動の意味のあるテスト、lint・format、ローカルと同じ検証を使うGitHub Actionsを整える。既存型検査・buildは再利用し、CDや新規業務機能は追加しない。",
+      "files": [],
+      "expectations": [
+        "初期化了承だけでテスト・品質ゲート・基本CIを実装範囲に含める",
+        "不足するTypeScript・テスト・CIのInstructionsに対象別applyToを付け、Python規約は追加しない",
+        "テスト本体を.githubへ集めず、既存挙動の成功・失敗・境界条件を確認する",
+        "既存npm・lockfile・型検査・buildを保持して再利用する",
+        "未設定かつGitHubホストという根拠からGitHub Actionsを既定にし、提供元を再質問しない",
+        "既存PR方針・CONTRIBUTING・template・branch rulesを調べ、正本がなければPR方針の文書を標準で補う",
+        "ブランチからPR・対象SHAのCIと必要レビュー・承認済みmerge・必要なCDまでの方針を提案し、jobとtriggerへ検証要件を対応させる",
+        "デプロイ、secrets、権限設定、commit、pushを実行しない"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "GitHub上の小規模Pythonリポジトリを初期化してください。既存pyproject.tomlとuv.lock、module、unittestがあり、CLIとVS Codeを使います。テストは既存契約を十分に検証しています。AI設定、lint、formatter、CIはありません。「開発基盤モード」やCIの指定はしていません。既存方式を保ってください。",
+      "expected_output": "標準初期化としてPython・テスト・CIの規約、適用する品質ゲートと基本CIを補う。既存のunittestとuvを維持し、不要なtest framework、TypeScript規約、Python配布用構造の再設計を加えない。",
+      "files": [],
+      "expectations": [
+        "基盤の追加依頼がなくても、必要な規約・品質ゲート・基本CIを補う",
+        "既存uvとunittestを維持し、十分なテストを重複作成しない",
+        "Python依存をグローバルへ入れず、必要な依存はmanifestと正規lockfileに反映する",
+        "根拠のあるToolを選び、不要なbuildや型検査の重複は理由付きで省略できる",
+        "新規ソースや未使用言語の規約を追加しない"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "GitHub上にあるTypeScriptとPythonの既存リポジトリについて標準初期化を了承しました。Azure Pipelinesが動作し、required checksも運用中です。テスト、lint、format、型検査は十分にそろっています。利用者は基本的な規約の不足だけを補いたい意図で、CI移行、デプロイ、外部サービス追加は依頼していません。",
+      "expected_output": "既存の基盤を再利用して不足する対象別規約を補う。GitHub上でもAzure Pipelinesを維持し、GitHub Actionsを重複作成せず、複雑な固有設定を初期化に混ぜない。",
+      "files": [],
+      "expectations": [
+        "既存Azure Pipelinesとrequired checksを維持し、GitHub Actionsを追加しない",
+        "十分なテスト・品質ゲートを作り直さず、不足する規約だけを補う",
+        "CI規約のapplyToを既存Azure Pipelinesの実際のパスに合わせる",
+        "クラウド接続、CD、secrets、権限変更は個別判断に残す",
+        "同じ初期化の再実行で追加差分を作らない"
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "文書専用のリポジトリを初期化してください。READMEと技術文書だけがあり、コード、manifest、CI、AI設定はありません。アプリを作る予定はなく、既存の実行可能なリンク検査もありません。",
+      "expected_output": "実体に合うAI設定・文書規約と、既存運用やhosting providerを確認したPR方針を整える。コード用の言語規約、架空のテスト、manifest、空成功CIを作らず、省略理由を示す。",
+      "files": [],
+      "expectations": [
+        "Python・TypeScript規約やコード用runnerを追加しない",
+        "存在しないテストコマンドやダミーCIを生成しない",
+        "適用できない標準項目の省略理由を示す"
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "Goの既存ライブラリを標準初期化してください。go.mod、ソース、_test.go、ローカル検証コマンドはあります。Copilotと.githubディレクトリはありますが、リモート、CI定義、CI提供元の指定はありません。",
+      "expected_output": "Goの標準配置とローカル検証を維持し、基本CIの提供元だけを確認する。.githubやCopilotの利用からGitHubホストと推測せず、CIを黙って省略または完了扱いしない。",
+      "files": [],
+      "expectations": [
+        "未解決のCI提供元を一問で確認する",
+        "GitHub Actionsを勝手に選ばず、CIを未完了として扱う",
+        "Goの_test.goをtestsや.githubへ移さず、既存方式を維持する"
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "GitHub上のリポジトリを標準初期化してください。CONTRIBUTING.mdがブランチ・PR・レビュー・merge・公開の正本で、既存PR templateから参照しています。CI/CDとbranch rulesは運用済みです。ただし公開完了の記述は「ローカルテストが通ったら完了」と古く、共通Instructionsにも同じ文章があります。既存配置を保って不足だけ補ってください。commit、push、merge、設定変更は依頼していません。",
+      "expected_output": "既存CONTRIBUTINGを正本として段階別の完了条件を更新し、Instructionsは短い規則とリンクへ整理する。十分なtemplateは維持し、別のPR方針ファイルやCIを重複生成しない。",
+      "files": [],
+      "expectations": [
+        "既存CONTRIBUTINGを更新し、pull-request-policy.mdを重複作成しない",
+        "PR templateを必須の新規ファイルにせず、既存の導線を再利用する",
+        "人向け方針の全文を共通Instructionsへ複製しない",
+        "ローカル検証とremote CI・merge・CD・公開先確認を区別する",
+        "既存branch rulesやCIを無断変更せず、commit・push・mergeを実行しない"
+      ]
+    },
+    {
+      "id": 16,
+      "prompt": "PR運用と公開の完了条件を分析だけしてください。ファイルは一切変更しないでください。GitHubホスト、main直pushの履歴、CI成功は確認済みですが、CONTRIBUTINGやPR方針はなく、branch rulesの読み取りは権限不足、CDは承認待ちです。標準方針をどう整えるべきか提案してください。",
+      "expected_output": "読み取りと提案のみを行い、既存直push運用は変更しない。branch rulesを不明、公開を未完了・承認待ちとし、方針やtemplateを生成しない。",
+      "files": [],
+      "expectations": [
+        "分析のみを守り、AGENTS・PR方針・template等を一切書き込まない",
+        "branch rulesの権限不足を未設定と断定しない",
+        "main直pushからPRへの移行は提案にとどめる",
+        "CI成功だけで公開完了とせず、CDの承認待ちを示す"
+      ]
+    },
+    {
+      "id": 17,
+      "prompt": "GitLabでホストしGitLab CIとMerge Requestの方針をCONTRIBUTINGで管理するリポジトリを標準初期化してください。Copilot向け.githubもあります。GitHubへ移行する依頼はありません。別条件としてAzure DevOpsでホストしAzure Pipelinesと既存PR方針を使う場合も判断してください。",
+      "expected_output": "両providerで既存の人向け方針、レビュー、pipelineを再利用する。共通の完了条件を提供元の証拠に対応させるが、GitHub専用のファイルやActionsを押し付けない。",
+      "files": [],
+      "expectations": [
+        "GitLabとAzure DevOpsの既存方針・CIをそれぞれ維持する",
+        "Copilotや.githubの存在からGitHubホストだと判断しない",
+        "pull-request-policy.md・GitHub PR template・GitHub Actionsを無条件に追加しない",
+        "CI・merge・CD・公開先確認の段階をprovider固有の結果と結び付ける"
+      ]
+    },
+    {
+      "id": 18,
+      "prompt": "公開まで依頼された作業の完了判定を、整備したPR方針に従って行ってください。承認済みmerge後の対象SHAに対応するGitHub Actions CIはcompleted/success、必要check jobsもsuccessです。同じ公開対象SHAのCD runはcompleted/failureで、deploy jobが失敗しました。run URLと失敗ログは読み取り可能です。ローカルtest成功を根拠に納品完了と報告してよいですか。",
+      "expected_output": "ローカル検証、CI、mergeは成功として分けるが、公開・納品は未完了とする。対象SHAとCD run URLを追跡し、失敗jobのログで原因を確認して許可範囲の修正・再検証を示す。",
+      "files": [],
+      "expectations": [
+        "CI成功・merge済みでもCD失敗なら公開・納品を未完了とする",
+        "対象SHAとCI/CDのrun URLを対応させる",
+        "該当deploy jobのログを確認し、未確認の原因を断定しない",
+        "continue-on-error、skip、required checksの解除で成功を装わない",
+        "CD再成功後も公開URL/API等のsmoke確認が必要とする"
+      ]
+    },
+    {
+      "id": 19,
+      "prompt": "公開までの依頼で、対象SHAのCIは成功しています。CDの観測結果を独立した5条件で判定してください。A: queued、B: in_progress、C: cancelled、D: run全体はcompleted/successだが必要deploy jobがskipped、E: 必要なCD runが見つからない。操作承認は追加されていません。",
+      "expected_output": "全条件で公開は未完了。実行中・取消・未実行を成功と区別し、必要なrun/jobの状態やtriggerを調べる。無断dispatchや設定変更を行わない。",
+      "files": [],
+      "expectations": [
+        "queuedとin_progressをterminal successとして扱わない",
+        "cancelledとskippedを成功扱いせず、run全体のsuccessだけにも依存しない",
+        "run欠落を成功とせず、対象SHA・trigger・必要jobを確認する",
+        "承認なしにrunを起動したり公開設定を変更したりしない"
+      ]
+    },
+    {
+      "id": 20,
+      "prompt": "公開完了の証拠を確認してください。PRの旧head SHAにはCI成功がありますが、新headへ更新済みです。新headに対応するtest merge SHAのchecksは成功し、必要レビュー後に承認済みsquash mergeしています。公開対象のsquash後SHAとは異なる古いSHAのCD runがsuccessで、公開URLは応答するものの旧versionです。その後、正しい公開対象SHAのrunと必要check/deploy jobsがすべてcompleted/successとなり、公開先の期待versionと必要smokeも成功した場合との判定差を説明してください。",
+      "expected_output": "PR head・test merge・squash後の公開SHAの対応を確認する。旧CDと旧versionの段階は未完了で、正しいSHAのCI/CD・必要jobs・公開先確認がそろった後だけ公開完了とする。",
+      "files": [],
+      "expectations": [
+        "旧headの成功を新headへ流用しない",
+        "PR headとtest merge SHAが異なることだけで誤判定せず、対応関係を確認する",
+        "merge後の公開SHAとCD run URL・SHAを照合し、古い成功を拒否する",
+        "URLの応答だけでなく期待versionと必要smokeを確認する",
+        "正しい対象の全必須段階が成功した場合だけ公開完了と判断する"
+      ]
+    },
+    {
+      "id": 21,
+      "prompt": "GitHubのリポジトリを初期化してください。CONTRIBUTINGには、責任者の承認後にmainへ直接pushし既存CI/CDで公開する方針が明記されています。PR方針を標準で整えるSkillですが、ユーザーは運用方式の変更、commit、push、PR作成、merge、公開を依頼していません。",
+      "expected_output": "既存main直push方針を正本として維持し、必要なら段階別完了条件だけを補う。PR方式への移行は別の合意事項とし、初期化を外部操作の許可にしない。",
+      "files": [],
+      "expectations": [
+        "GitHubの既定提案より明示されたmain直push方針を優先する",
+        "PRの必須化、branch protection変更、Actionsへの移行を無断で行わない",
+        "merge不要の運用は理由付き対象外にでき、未実行mergeを成功とは報告しない",
+        "方針文書作成とcommit・push・PR作成・merge・公開の承認を区別する"
+      ]
+    },
+    {
+      "id": 22,
+      "prompt": "PR方針を整備し、公開まで依頼された作業の状況を報告してください。ローカル検証は成功ですが、GitHubの対象SHAに必要なCIが実行中、mergeは承認待ちです。利用可能なToolにはmergeもデプロイもなく、公開設定変更の権限もありません。方針文書を作れば全て自動実行・成功保証になるという説明でよいですか。",
+      "expected_output": "文書は運用規則であって権限制御や実行保証ではないと説明する。対象SHAと取得可能なrun URL、残る段階を報告し、未完了・承認待ち／ブロックを明示する。",
+      "files": [],
+      "expectations": [
+        "CI実行中とmerge承認待ち、CD Tool不足を未完了として区別する",
+        "存在しないToolの実行や未承認merge・公開設定変更を成功と主張しない",
+        "必要な承認・権限・Toolと次の操作を明示する",
+        "Instructionsが操作権限を付与・制限したり実行成功を保証したりするとは説明しない"
+      ]
+    },
+    {
+      "id": 23,
+      "prompt": "PR運用方針と段階別の完了条件を整備済みのGitHubリポジトリです。独立した依頼Aは「コード変更とローカル検証だけ。commit・pushは禁止」、依頼Bは「承認済み変更のPRを作成するところまで。mergeと公開はしない」です。それぞれ依頼範囲の作業は成功しましたが、公開用CDは未実行です。最終報告と次の行動を判断してください。",
+      "expected_output": "Aはコード・ローカル検証まで、BはPR作成までの達成を報告する。CD未実行を公開成功としないが、公開までの条件を範囲外の作業へ強制しない。",
+      "files": [],
+      "expectations": [
+        "Aではcommit・push・PR作成を行わず、達成したローカル範囲だけを報告する",
+        "BではPR作成の成功と未merge・未公開を区別し、無断で先へ進まない",
+        "依頼範囲外のCDを理由付き対象外とし、公開完了とは報告しない",
+        "PR方針文書を外部操作の包括的承認として扱わない"
+      ]
+    },
+    {
+      "id": 24,
+      "prompt": "小規模CLIの標準初期化は了承済みで、Planモードを終了しRepositoryへの書き込みも許可されています。Planでは『入力ファイルを読み検証結果をJSONで出す。正常なら終了コード0、不正入力なら1。外部送信は非目標』と合意しました。個人データを送信しないためネットワーク通信を行わない設計を採用する判断も明示的に承認済みです。READMEは現在の目的を説明しますが、Spec・ADRと配置規則はありません。技術の規約・テスト・CIは十分です。現在の実装は未変更です。設計記録と読む・更新する規則の具体的な出力案を示し、同じ要件で再実行した場合の扱いも説明してください。実ファイルへの書き込みはこの評価では不要です。",
+      "expected_output": "小規模なので独立plansは作らず、README等の未実装と明記した節へ合意要件を保存する案を出す。.github/adrへネットワーク通信を行わない判断を記録する。受け入れ条件・非目標・状態を明記し、実装済みとはしない。READMEで十分ならArchitectureを量産せず、AGENTSの導線と共通Instructionsの更新規則を整える。再実行は重複なし。",
+      "files": [],
+      "expectations": [
+        "Planモード利用だけで独立plansを作らず、README等に未実装要件を保持する具体案を示す",
+        "終了コード0と1、JSON出力、外部送信なしを受け入れ条件や非目標に保持する",
+        "承認済みの判断を.github/adrへ残し、背景・理由・影響を含める",
+        "未実装の仕様を現在状態や完了として記載しない",
+        "AGENTSの読む条件と共通Instructionsの継続更新規則を示す",
+        "再実行で重複ファイル・ADR番号・日付だけの変更を作らない"
+      ]
+    },
+    {
+      "id": 25,
+      "prompt": "設計文書の更新だけを依頼します。既存docs/rfcs/export.mdが合意仕様の正本、docs/decisions/001-storage.mdがAcceptedのADR、docs/architecture.mdが現在設計です。保存方式の置換は明示的に承認済みですが、実装と移行検証は未完了です。変更理由・代替案・影響は現在の会話で確認できています。.githubにはAI Instructionsがあります。各文書の更新方針を具体的に示し、移行検証が成功した後のPlan終了処理との違いも説明してください。評価なのでファイルは変更しないでください。",
+      "expected_output": "既存docsを正本として維持し.githubへ複製しない。既存番号規則に沿う後続ADRと旧ADRのSuperseded・相互参照、RFCと現在設計の状態差を示す。検証前はPlan未完了、成功後に恒久情報と状態・導線を更新する。",
+      "files": [],
+      "expectations": [
+        "既存RFC・ADR・Architectureを再利用し.githubに複製しない",
+        "後続ADRと旧ADRのSuperseded状態・相互参照で履歴を保持する",
+        "承認済みの決定と実装済みの現在設計を区別する",
+        "受け入れ条件と移行検証が未達ならPlanを完了にしない",
+        "完了後の恒久情報移管と既存保持方針を示し、勝手に削除しない"
+      ]
+    },
+    {
+      "id": 26,
+      "prompt": "互いに独立した条件A〜Eで、Plan・ADR保存の次の行動を示してください。A: 仕様は合意済みですが現在もPlanモードでRepository書き込みは未承認。B: ユーザーはAGENTS.mdだけの作成を許可、合意Planと重要判断もある。C: AI設定だけの初期化を許可、既存Architectureはある。D: 標準初期化は了承済みだがDB技術の選択は未決で、参照される過去のPlan本文は現在の会話から読めない。E: 標準初期化済みで小規模、READMEが十分、合意仕様も重要判断もない。各条件で作成するもの・しないものと確認事項を返してください。実ファイルは変更しない評価です。",
+      "expected_output": "AはRepositoryへ書かず実装開始まで待つ。BはAGENTSだけ、CはAI設定の導線と更新規則だけ。Dは未決判断をAcceptedにせずPlan提供を求め、履歴・DB・他セッションを探索しない。Eは空Plan・ADR・Architectureを作らない。",
+      "files": [],
+      "expectations": [
+        "Aでは仕様合意と書き込み許可を区別しRepositoryへ保存しない",
+        "BではAGENTS以外のPlan・ADR・Instructionsを追加しない",
+        "Cでは独立Plan・ADR・Architectureを新規作成しない",
+        "DではPlan提供を求め、他セッション・内部DB・履歴を自動探索しない",
+        "Dでは未決DB選択や初期化承認をAccepted ADRへ変換しない",
+        "Eでは空ディレクトリ・形式だけのADR・重複文書を作らない"
+      ]
+    },
+    {
+      "id": 27,
+      "prompt": "複数月にわたるデータ移行について、仕様と文書作成は承認済みでPlanモードは終了しています。旧形式と新形式の並行読み取り、backfill、整合性検証、切り替え、旧形式廃止の5段階が必要で、段階ごとの合格条件とrollback条件は合意済みです。既存Issue・Spec・RFCと文書配置規則はなく、READMEだけでは段階間の依存と受け入れ条件を維持できません。新形式を採用する重要判断も承認済みですが、実装は未着手です。初期に残す文書の配置・内容と完了時の更新方針を説明してください。評価なので実ファイルは変更しないでください。",
+      "expected_output": "この場合は独立Planが必要と判断し.github/plansに段階・受け入れ条件・rollback・終了時の移管先をまとめ、.github/adrに重要判断を残す。現在Architectureは旧形式のままで、新形式を実装済みとしない。完了時に実装・検証と恒久情報を対応させる。",
+      "files": [],
+      "expectations": [
+        "長期・複数段階かつ既存正本不足を根拠に.github/plansへ独立計画を作る案を示す",
+        "5段階の依存関係・合格条件・rollback条件を保存対象にする",
+        "新形式採用の理由はADRへ分け、未実装設計を現在Architectureと混同しない",
+        "完了時に検証と恒久情報の移管・状態更新を確認する"
+      ]
+    },
+    {
+      "id": 28,
+      "prompt": "複数言語のクライアントを持つSDKリポジトリです。AI設定の更新は承認済みで、Agentファイルも変更可能です。現行のprotocol定義と互換性文書、十分なテスト・CIがあります。リリースごとに旧サーバーと新クライアントの互換性を独立に確認する必要があり、一般的なコードレビューとは異なる入出力と判断基準が決まっています。Mainが対象差分とテスト結果を渡し、担当は根拠付きの互換性指摘を返します。既存のCustom Agentはなく、CLIでread/search aliasの対応を確認済みです。書き込みや外部接続は担当に不要です。更新内容を具体化してください。この評価では実ファイルに書かず、作成するAgentのfrontmatter・本文・入口の更新案を回答へ含めてください。",
+      "expected_output": "適性評価を行い、条件を満たす互換性レビューの役割を作成と判断する。将来の提案だけで終えず、read/searchのAgent定義と選択条件・Mainとの入出力・停止条件・導線を具体化する。無関係なAgent一式や新しい実行基盤は作らない。",
+      "files": [],
+      "expectations": [
+        "独立した責務、反復需要、既存との差、入出力、権限、引き継ぎ負担から適性を評価する",
+        "不足役割を作成と判断し、実際に保存できるfrontmatterと本文を提示する",
+        "toolsはread/searchに限定し、必要な入力、返却物、担当外、停止条件を記す",
+        "AGENTSと共通Instructionsへの導線・選択条件を具体化し、自動選択を保証しない",
+        "全役割のAgentセット、Hooks、MCP、CIの追加を行わない"
+      ]
+    },
+    {
+      "id": 29,
+      "prompt": "AI設定更新が承認された独立した条件A〜Cを評価してください。A: 小規模な標準ライブラリCLIで、通常の単発修正と一般的なレビューしかなく、組み込みAgentと既存Instructionsで十分です。B: 独立した専門レビューが反復しますが、既存のcheck-reviewer.agent.mdが必要な責務・read/search・入出力をすべて満たしています。C: Bと同じ依頼を変更のない状態で再実行しました。各条件の適性評価、変更するもの・しないものを返してください。実ファイルは変更しない評価です。",
+      "expected_output": "Aは適性評価を省略せず、新規Agentを見送る。Bは既存Agentを再利用し別名コピーを作らない。Cはno-opとし、日時・完了マーカーや重複定義を作らない。Agent数や並列化自体を目的にしない。",
+      "files": [],
+      "expectations": [
+        "Aでも適性評価と見送りの根拠を示す",
+        "Bでは既存Agentを再利用し、同じ役割のAgentを追加しない",
+        "Cではファイル更新、日付変更、完了マーカーを作らない",
+        "小規模作業を必ず複数Agentへ分割する方針にしない"
+      ]
+    },
+    {
+      "id": 30,
+      "prompt": "既存Custom Agentの保守を含むAI設定更新を依頼します。contract-reviewer.agent.mdはread/searchで動作し、利用者が追記した重要な除外条件があります。契約定義がlegacy/schema.jsonからcontracts/v2.jsonへ移動し、入力として差分に加えて互換性テスト結果が必要になりました。独立した専門レビューの需要は変わらず、Tool追加は不要です。更新対象と保持する内容、生成先Instructionsの継続更新規則、更新後の確認を具体的に示してください。評価なので実ファイルは変更しません。",
+      "expected_output": "新規Agentを増やさず既存定義と関連導線だけを更新する。既存名、利用者の除外条件、read/search権限を維持し、参照先・入力・返却条件を新契約へ合わせる。担当外・入力不足を含む確認と許可範囲内の見直し規則を示す。",
+      "files": [],
+      "expectations": [
+        "役割名やAgent数を変えず、既存Agentを更新する",
+        "legacy/schema.jsonからcontracts/v2.jsonへの参照変更と新しい入力を反映する",
+        "利用者の除外条件とread/search権限を保持する",
+        "責務・参照先・入出力や確認済みの誤委譲を見直し条件にする",
+        "代表依頼、担当外、入力不足の確認を含め、自動選択や高速化を実証済みとしない"
+      ]
+    },
+    {
+      "id": 31,
+      "prompt": "専門Agentの適性は満たすと確認できています。独立した条件A〜Dの次の行動を示してください。A: ユーザーはAGENTS.mdだけの更新を許可しています。B: AI構成の分析のみで、ファイル変更は禁止です。C: 通常の機能修正だけが依頼され、AI設定更新は未承認です。D: AI設定更新は承認済みですが、既存Agentのファイルが読み取り不能です。各条件で作成・更新・確認待ちの扱いを返してください。実ファイルは変更しない評価です。",
+      "expected_output": "適性評価の義務を権限拡大と解釈しない。AはAGENTSのみ、Bは分析のみ、Cは必要な見直しの報告に留め、Dは既存設定を不明として保持する。いずれも指定外の新規Agent作成や上書きをしない。",
+      "files": [],
+      "expectations": [
+        "AではAgentファイルや別のInstructionsを作成・変更しない",
+        "Bでは評価結果だけを返し書き込まない",
+        "Cでは機能修正をAI設定変更の承認へ拡張しない",
+        "Dでは読めない設定を未設定と判断せず、上書き・迂回を行わない"
+      ]
+    },
+    {
+      "id": 32,
+      "prompt": "読み取り専用のUI確認Agentを保守しています。AgentはMainが渡す画面資料を評価する設計ですが、資料不足が複数回確認されました。AI設定の文言・入出力の更新は承認済みです。Agentへexecuteとagentを追加し、ブラウザMCPを導入し、Hookで毎回自動起動させれば解決しそうですが、これらの権限・接続・自動実行は承認されていません。安全な更新と追加承認が必要な変更を区別してください。評価なので実ファイルは変更しません。",
+      "expected_output": "入力資料と不足時の返却条件、Mainとの引き継ぎを更新する。Tool・委譲範囲・MCP・Hooks・自動承認を保守の名目で追加しない。実画面未確認を明示し、必要なら追加能力の対象と影響を示して承認を求める。",
+      "files": [],
+      "expectations": [
+        "資料不足という確認済みの問題を入出力・停止条件の更新へ結び付ける",
+        "read/searchの境界を維持し、executeやagentを黙って付与しない",
+        "MCP、Hooks、自動起動、自動承認を別の承認対象として扱う",
+        "資料の不足を実画面の成功や適合性の推測で埋めない"
+      ]
+    },
+    {
+      "id": 33,
+      "prompt": "Frontend担当とBackend担当のCustom Agentは作成済みです。今回の変更では両者が同じAPI契約ファイルを更新し、同じローカルDBとテスト用サーバーを使う必要があります。別worktreeを用意すれば安全に同時実装できるでしょうか。一方、固定した同じ差分に対するコードレビューと画面資料の評価は独立しています。Agentの用意と実際の起動・並列化を区別し、Mainの進め方を返してください。評価なので操作はしません。",
+      "expected_output": "Agentが存在するだけで全担当を起動しない。共有契約・編集担当・副作用を先に整理し、競合する実装は逐次化または環境を分離する。独立した読み取り専用評価だけを並列化し、Mainが結果と統合後の検証を担当する。",
+      "files": [],
+      "expectations": [
+        "同じファイルの同時編集を避け、共有契約と担当を先に決める",
+        "worktree分離だけでは共通DB・プロセスの干渉を解消できないと扱う",
+        "独立した読み取り専用評価と、依存する実装の起動条件を区別する",
+        "Mainが結果の重複・矛盾を整理し、統合後も確認する"
+      ]
+    },
+    {
+      "id": 34,
+      "prompt": "テンプレートから作った新しいリポジトリに、このSkillとAI Development Setup Agent、README、MIT Licenseがあります。個人Skillは使えません。Python 3.12標準ライブラリでJSONを検証するCLIの最小本体・unittest・標準初期化が明示的に依頼され、GitHubホストも確認済みです。cloud agentの作業ブランチへのcommit・push・PR作成まで許可されています。既存Skillがあるので初期化不要と判断してよいですか。読み込む資料、補う範囲、承認境界を説明してください。これは読み取り専用の判断評価で、実際の生成や外部操作は行いません。",
+      "expected_output": "設定の存在を、明示的に依頼された初期化を省略する理由にしない。同梱Skillと参照資料を使い、標準の不足と依頼された最小CLIを整備する計画を示す。個人Skillを要求せず、MIT表示を保持する。PRまでは許可範囲、mergeや公開は対象外とする。",
+      "files": [],
+      "expectations": [
+        "個人ホームを探索せず、リポジトリ内の同梱資料を使う",
+        "既存AI設定を保持しながら、明示依頼されたソース・テスト・基本CI等の不足を補う",
+        "同じ初期化とPR作成の了承を重ねて尋ねない",
+        "MITの著作権表示と許諾表示を保持する",
+        "merge・デプロイ・公開・設定変更へ拡張しない"
+      ]
+    },
+    {
+      "id": 35,
+      "prompt": "独立した条件A〜CでAI Development Setupの次の行動を説明してください。A: Agentだけ選択され、作業の依頼はまだありません。B: 標準初期化は了承済みですが、空のリポジトリで用途と言語は未定、対話的な質問Toolはありません。C: Agent定義は読めますが、同梱SKILL.mdを権限不足で読めません。これは判断評価です。ファイル変更、個人設定の探索、外部操作は行わないでください。",
+      "expected_output": "Aは選択を編集許可にせず依頼を確認する。Bは重要な不足について一度に一問だけ質問を返して停止し、Frameworkや依存を勝手に選ばない。Cは未設定ではなく読み取り不能とし、迂回や代替Skillの導入をせず停止する。",
+      "files": [],
+      "expectations": [
+        "Agent選択だけで初期化しない",
+        "質問Toolがなくても一問を返して回答を待つ",
+        "既存の初期化了承自体は重ねて確認しない",
+        "読み取り不能を未設定とせず、同梱Skillの代替を個人設定から探さない"
+      ]
+    },
+    {
+      "id": 36,
+      "prompt": "独立した条件A〜Cで外部操作の範囲を判定してください。A: ローカルで初期化のみを依頼され、commit・push・PRは未承認。B: cloud agentで初期化しPRを作ること、当該作業ブランチへのcommit・pushは明示的に許可され、ホストが既にタスクのPRを用意している。C: 利用者はcommit・pushを禁止しているが、変更をpushするcloud agentの実行方式で開始している。変更前の行動と、merge・公開の扱いを説明してください。実際の外部操作は行わない評価です。",
+      "expected_output": "Aではローカル変更と検証まで。Bでは既存のホスト管理PRを利用し、同じPRの二重作成や不要な再承認を避ける。Cでは禁止とホスト挙動の衝突を説明し、変更前に停止する。いずれもmerge・デプロイ・公開・権限設定変更を初期化から推論しない。",
+      "files": [],
+      "expectations": [
+        "ローカルの初期化のみをcommit・push・PRの許可としない",
+        "明示されたクラウドのPR作成許可を尊重し、ホスト管理のPRを二重作成しない",
+        "commit・push禁止とホスト方式が両立しない場合は変更前に停止する",
+        "PRまでの了承をmerge・デプロイ・公開・設定変更へ広げない"
+      ]
+    }
+  ]
+}
