@@ -8,6 +8,9 @@
 
 | 種類 | このテンプレートの配置 | 公式文書上の対応 |
 | --- | --- | --- |
+| Agent向けの入口 | `AGENTS.md` | cloud agentが参照するAgent instructions |
+| 共通Instructions | `.github/copilot-instructions.md` | リポジトリの依頼へ適用する共通指示 |
+| 初期化方針 | `.github/template-bootstrap.md` | 上記の入口から明示的に読む文書。独自の自動検出ファイルではない |
 | Custom Agent | `.github/agents/ai-development-setup.agent.md` | GitHubのcloud agent、CLI等。ホストごとの設定差を確認する |
 | Skill | `.github/skills/aidd-init/SKILL.md` | cloud agent、CLI、Copilot app、VS Code等 |
 | Skillの参照資料 | 同じSkillフォルダーの`references` | 必要なときに本文から参照する |
@@ -21,6 +24,19 @@
 個人PCのホームディレクトリはcloud agentへ自動配布されない。
 この配布版は手順と参照資料をリポジトリ内に同梱し、同名の個人Skillや外部フォルダーを前提にしない。
 生成する設定も個人の絶対パスや未同梱資料へ依存させない。
+
+## 初回実装での読み込み
+
+[リポジトリInstructionsの公式手順](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions)
+では、`.github/copilot-instructions.md`と`AGENTS.md`の対応を説明している。
+一方、[Skillの利用](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills#how-copilot-uses-agent-skills)
+はプロンプトとdescriptionに基づくモデルの選択であり、配置だけで毎回起動する仕組みではない。
+
+そのためこのテンプレートでは、通常のAgentが共通の入口から初期化方針を読み、
+適用条件を満たす場合は同梱SKILL.mdを明示的に読む。Custom Agentの自動起動には依存しない。
+InstructionsとSkillの配置・静的な判断評価は、実際のcloud agentでの読み込みと作業完了の保証ではない。
+利用するブランチへ入口・方針・Skillが反映されていることを確認し、新しいタスクで評価する。
+既存の派生先・進行中のタスクへ、配布元の更新が自動同期されるとは説明しない。
 
 ## Custom Agentの設定
 
@@ -53,6 +69,8 @@
 PRを自動で作る入口と、作業後に作成を指示する入口があるため、一律に説明しない。
 
 初期化だけの了承を、独自のcommit・push・PR操作への了承に広げない。
+初回実装と初期化を一体で行う場合も、当該タスクを受け付けたホストが管理する
+作業ブランチ・commit・push・PRフローに従い、独自の外部操作を開始しない。
 変更とPRまで明示的に依頼された場合は、当該タスクの作業ブランチとホスト管理のPRフローを使う。
 同じ依頼範囲を重ねて確認せず、PRを二重作成しない。
 merge・デプロイ・公開・設定変更は別の操作として扱う。

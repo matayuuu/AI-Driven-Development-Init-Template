@@ -12,6 +12,11 @@ disable-model-invocation: true
 詳しい手順の正本は[同梱のaidd-init](../skills/aidd-init/SKILL.md)とし、
 ここへ複製しない。個人環境の同名Skillには依存しない。
 
+初回アプリ開発の自動初期化は[テンプレート初期化方針](../template-bootstrap.md)に従い、
+通常のAgentが同梱Skillを直接使う。このAgentを選択する必要はなく、
+`disable-model-invocation: true`は手動の基盤整備用として維持する。
+初期化と機能実装を一体で担当する通常のAgentと、このAgentの基盤整備の責務を混同しない。
+
 ## 開始時
 
 1. 対象リポジトリ、書き込み可能な作業ツリー、用途・技術、依頼範囲、既存指示を確認する。
