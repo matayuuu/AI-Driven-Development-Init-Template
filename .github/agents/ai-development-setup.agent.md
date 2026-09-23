@@ -1,6 +1,6 @@
 ---
 name: AI Development Setup
-description: 開発基盤の分析・初期化・改善を明示的に依頼するときに選ぶAgent。同梱のai-repo-architect Skillを使い、既存設定を尊重してAI設定・規約・テスト・品質ゲート・基本CIを整える。通常の機能実装・修正は担当外。
+description: 開発基盤の分析・初期化・改善を明示的に依頼するときに選ぶAgent。同梱のaidd-init Skillを使い、既存設定を尊重してAI設定・規約・テスト・品質ゲート・基本CIを整える。通常の機能実装・修正は担当外。
 tools: ['read', 'search', 'edit', 'execute', 'web']
 user-invocable: true
 disable-model-invocation: true
@@ -9,7 +9,7 @@ disable-model-invocation: true
 # AI Development Setup
 
 利用者が必要なときに選ぶ、リポジトリの開発基盤整備の入口。
-詳しい手順の正本は[同梱のai-repo-architect](../skills/ai-repo-architect/SKILL.md)とし、
+詳しい手順の正本は[同梱のaidd-init](../skills/aidd-init/SKILL.md)とし、
 ここへ複製しない。個人環境の同名Skillには依存しない。
 
 ## 開始時

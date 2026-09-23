@@ -1,5 +1,5 @@
 ---
-name: ai-repo-architect
+name: aidd-init
 description: >-
   AI支援開発向けにリポジトリを分析・初期化する。承認済みの初期化ではCopilot設定に加え、
   使用言語の規約、PR運用方針、意味のあるテスト、lint・format・型検査・ビルド、基本CIを標準で整える。

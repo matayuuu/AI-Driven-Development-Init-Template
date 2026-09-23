@@ -9,7 +9,7 @@
 | 種類 | このテンプレートの配置 | 公式文書上の対応 |
 | --- | --- | --- |
 | Custom Agent | `.github/agents/ai-development-setup.agent.md` | GitHubのcloud agent、CLI等。ホストごとの設定差を確認する |
-| Skill | `.github/skills/ai-repo-architect/SKILL.md` | cloud agent、CLI、Copilot app、VS Code等 |
+| Skill | `.github/skills/aidd-init/SKILL.md` | cloud agent、CLI、Copilot app、VS Code等 |
 | Skillの参照資料 | 同じSkillフォルダーの`references` | 必要なときに本文から参照する |
 | 評価ケースとライセンス | 同じSkillフォルダーの`evals`と`LICENSE` | 保守・配布用。配置だけで評価は実行されない |
 
@@ -84,7 +84,7 @@ copilot skill list --json
 名前、有効状態、リポジトリ配下のパスを照合する。個人版が見つかっただけでは配布版の検出成功にしない。
 コマンドがないバージョンではhelpと
 [CLIのSkill手順](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills)
-を確認する。対応する対話CLIでは`/skills reload`、`/skills info ai-repo-architect`、
+を確認する。対応する対話CLIでは`/skills reload`、`/skills info aidd-init`、
 Agent選択では`/agent`が案内されている。
 ローカルでの検出はcloud agentでの起動・Tool解決・PR作成の確認とは別である。
 

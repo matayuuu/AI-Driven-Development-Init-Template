@@ -1,5 +1,5 @@
 {
-  "skill_name": "ai-repo-architect",
+  "skill_name": "aidd-init",
   "evals": [
     {
       "id": 1,
@@ -7,7 +7,7 @@
       "expected_output": "初期化に伴う書き込み、依存導入、雛形生成、デプロイの前に、明示的な了承を求める。機能依頼やSkillの自動選択を了承として扱わず、個人Instructionのインストールを要求しない。",
       "files": [],
       "expectations": [
-        "ai-repo-architectを使う明示的な了承を求める",
+        "aidd-initを使う明示的な了承を求める",
         "リポジトリファイルの作成やクラウド操作を行わない",
         "元のAPI作成依頼を保留したまま維持する"
       ]
